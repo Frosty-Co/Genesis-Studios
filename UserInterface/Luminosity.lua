@@ -14,7 +14,7 @@
         October 19th, 2020
 
 	Author:
-        ihavoc101 @ v3rmillion.net / OminousVibes#1234 @ discord.gg
+        OminousVibes @ v3rmillion.net / OminousVibes#1234 @ discord.gg
 
     Credits:
         AztupBrew(Fork of IronBrew2): obfuscation; Version 2.7.2
