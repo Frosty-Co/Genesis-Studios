@@ -1,4 +1,114 @@
-local FreeGames = {
+-- // Constants \\ --
+-- [ Services ] --
+local Services = setmetatable({}, {__index = function(Self, Index)
+    local NewService = game:GetService(Index)
+    if NewService then
+        Self[Index] = NewService
+    end
+    return NewService
+end})
+
+-- [ LocalPlayer ] --
+local LocalPlayer = Services.Players.LocalPlayer
+
+-- [ Modules ] --
+local LoopPlus = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/Modules/LoopPlus.lua", true))()
+
+-- [ User Interface ] --
+local Luminosity = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/UserInterface/Luminosity.lua", true))()
+Luminosity.LoadingScreen()
+local Window = Luminosity.new("Genesis Hub", "v1.0.0", 4483362458)
+
+-- // Functions \\ --
+local Utility = {}
+
+--[[
+Utility.new(Class: string, Properties: Dictionary, Children: Array)
+    Creates a new object with the Properties
+]]
+function Utility.new(Class, Properties, Children)
+    local NewInstance = Instance.new(Class)
+
+    for i,v in pairs(Properties or {}) do
+        if i ~= "Parent" then
+            NewInstance[i] = v
+        end
+    end
+
+    for i, Child in pairs(Children or {}) do
+        if typeof(Child) == "Instance" then
+            Child.Parent = NewInstance
+        end
+    end
+
+    NewInstance.Parent = Properties.Parent
+    return NewInstance
+end
+
+--[[
+Utility.Tween(Object: Instance, TweenInformation: TweenInfo, Goal: Dictionary)
+    Creates a tween
+]]
+function Utility.Tween(Object, TweenInformation, Goal)
+    -- [ Tween ] --
+    local Tween = Services.TweenService:Create(Object, TweenInformation, Goal)
+
+    -- [ Info ] --
+    local Info = {}
+
+    -- Yield --
+	function Info:Yield()
+		Tween:Play()
+		Tween.Completed:Wait(10)
+	end
+
+	return setmetatable(Info, {__index = function(Self, Index)
+		local Value = Tween[Index]
+		return typeof(Value) ~= "function" and Value or function(self, ...)
+			return Tween[Index](Tween, ...)
+		end
+	end})
+end
+
+--[[
+Utility:Wait()
+    Yields for a short period of time.
+]]
+function Utility.Wait(Seconds)
+    if Seconds then
+        local StartTime = time()
+        repeat
+            Services.RunService.Heartbeat:Wait(0.1)
+        until time() - StartTime > Seconds
+    else
+        return Services.RunService.Heartbeat:Wait(0.1)
+    end
+end
+
+--[[
+Utility.ESP(Part: BasePart, Color: Color3)
+    Creates an ESP box for a Part.
+]]
+function Utility.ESP(Part, Parent, Color, ExtraInfo)
+    local Info = ExtraInfo or {}
+    for i,v in pairs({Visible = true}) do
+        Info[i] = v
+    end
+
+    return Part:FindFirstChildOfClass('BoxHandleAdornment') or Utility.new("BoxHandleAdornment", {
+        Name = "BoxHandleAdornment",
+        Visible = Info.Visible,
+        AlwaysOnTop = true,
+        ZIndex = 5,
+        Adornee = Part,
+        Color3 = Color,
+        Size = Part.Size + Vector3.new(0.1, 0.1, 0.1),
+        Transparency = 0.4,
+        Parent = Parent
+    })
+end
+
+return {
     -- Rake --
     [2413927524] = function(Window)
         local ESP = Utility.new("BillboardGui", {
@@ -441,5 +551,3 @@ local FreeGames = {
         local Info = {}
     end;
 }
-
-return FreeGames
