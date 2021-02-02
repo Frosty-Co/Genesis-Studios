@@ -14,11 +14,6 @@ local LocalPlayer = Services.Players.LocalPlayer
 -- [ Modules ] --
 local LoopPlus = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/Modules/LoopPlus.lua", true))()
 
--- [ User Interface ] --
-local Luminosity = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/UserInterface/Luminosity.lua", true))()
-Luminosity.LoadingScreen()
-local Window = Luminosity.new("Genesis Hub", "v1.0.0", 4483362458)
-
 -- // Functions \\ --
 local Utility = {}
 
