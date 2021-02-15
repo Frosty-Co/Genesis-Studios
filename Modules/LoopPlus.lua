@@ -1,18 +1,9 @@
 -- // Constants \\ --
 -- [ Services ] --
-local Services = setmetatable({}, {__index = function(Self, Index)
-    local NewService = game:GetService(Index)
-    if NewService then
-        Self[Index] = NewService
-    end
-    return NewService
-end})
+local Services = loadstring(game:HttpGet("https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/Modules/Services.lua", true))()
 
 -- // Variables \\ --
 local Connections = {}
-
--- // Functions \\ --
-local Utility = {}
 
 -- // Main Module \\ --
 local Module = {}
