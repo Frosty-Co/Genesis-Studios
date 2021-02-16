@@ -75,10 +75,10 @@ function PathFinder:Run(finalPosition, showWaypoints)
 	
 	self.finalPosition = finalPosition
 	self.Path:ComputeAsync(self.InitialPosition or self.HumanoidRootPart.Position, finalPosition)
-	if self.Path.Status == Enum.PathStatus.NoPath then self:Stop("Error: No path found") end
+	if self.Path.Status == Enum.PathStatus.NoPath then self:Stop("Error: No path found") return false end
 	self.Waypoints = self.Path:GetWaypoints()
 	self.currentWaypoint = 1
-	
+
 	self.connection = self.Humanoid.MoveToFinished:Connect(function(Reached)
 		self.__WaypointReached:Fire(Reached, self.currentWaypoint, self.Waypoints)
         if Reached and self.currentWaypoint < #self.Waypoints and self.Running then
@@ -117,15 +117,17 @@ function PathFinder:Run(finalPosition, showWaypoints)
 			part.BrickColor = BrickColor.new("Neon orange")
 		end
 	end
-	
+
     if self.Waypoints[self.currentWaypoint] and self.Running then
 		self.Humanoid:MoveTo(self.Waypoints[self.currentWaypoint].Position)
 		self.elapsed = tick()
 	else
 		self:Stop("Error: Invalid Waypoints")
 	end
-	
+
 	self.busy = false
+
+    return true
 end
 
 function PathFinder:Distance(Target)
