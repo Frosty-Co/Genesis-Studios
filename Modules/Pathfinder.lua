@@ -30,10 +30,10 @@ function PathFinder.new(Rig, PathParams, UseStored)
 	local self = setmetatable({}, PathFinder)
 
 	self.Rig = Rig
-	self.HumanoidRootPart = Rig:WaitForChild("HumanoidRootPart")
-	self.Humanoid = Rig:WaitForChild("Humanoid")
+	self.HumanoidRootPart = Rig.PrimaryPart or Rig:WaitForChild("HumanoidRootPart")
+	self.Humanoid = Rig:FindFirstChildWhichIsA("Humanoid") or Rig:WaitForChild("Humanoid")
 	self.Timeout = 1
-	
+
 	self.__Blocked = Instance.new("BindableEvent")
 	self.__WaypointReached = Instance.new("BindableEvent")
 	self.__Completed = Instance.new("BindableEvent")
