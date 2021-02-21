@@ -12,14 +12,14 @@ local Module = {}
 Module.new(Delay: integer, Callback: Function)
     Creates a loop.
 ]]
-function Module.new(Delay: integer, Callback: Function)
+function Module.new(Delay: integer, Callback: Function, Event: RBXScriptSignal)
     local Loop = {
         Delay = Delay;
         Function = Callback;
         LastCalled = time();
     }
 
-    local Connection = Services.RunService.RenderStepped:Connect(function()
+    local Connection = (Event or Services.RunService.Heartbeat):Connect(function()
         if time() - Loop.LastCalled > Loop.Delay then
             Loop.LastCalled = math.huge
             Loop.Function()
