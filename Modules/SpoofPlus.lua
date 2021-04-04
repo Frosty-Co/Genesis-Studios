@@ -6,19 +6,19 @@
         |_|
 
     Source:
-		nil
+        https://raw.githubusercontent.com/iHavoc101/Genesis-Studios/main/Modules/SpoofPlus.lua
 
-	Version:
-		0.1.0
+    Version:
+        0.1.0
 
-	Date:
-		April 3rd, 2021
+    Date:
+        April 3rd, 2021
 
-	Author:
-		OminousVibes @ v3rmillion.net / OminousVibes#7259  @ discord.gg
+    Author:
+        OminousVibes @ v3rmillion.net / OminousVibes#7259  @ discord.gg
 
-	Contributors:
-		Max Gamer @ v3rmillion.net -- Moral Support
+    Contributors:
+        Max Gamer @ v3rmillion.net -- Moral Support
 ]]
 
 -- // Constants \\ --
