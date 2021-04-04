@@ -80,7 +80,8 @@ RawMetatable.__index = newcclosure(function(Self, Index)
 
     if game:IsAncestorOf(rawget(getfenv(2), "script")) then
         pcall(function()
-            local Spoof = rawget(rawget(SpoofedIndex, Self), Index)
+            local SpoofedObject = rawget(SpoofedIndex, Self) or rawget(SpoofedIndex, tostring(Self))
+            local Spoof = rawget(SpoofedObject, Index)
             if Spoof then
                 Return = Spoof.Value(Self, Index)
             end
