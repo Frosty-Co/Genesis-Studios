@@ -46,19 +46,22 @@ function SpoofPlus:AddSpoof(Index, Value)
     assert(table.find(self._spoofs, Index) == nil and SpoofedIndex[self._object][Index] == nil, "Spoof already exists, please remove pre-existing spoof.")
 
     local NewSpoof = {
-        Index = Index;
-        Value = typeof(Value) == "function" and Value or function() return Value end;
+        _Index = Index;
+        _Value = typeof(Value) == "function" and Value or function() return Value end;
     }
     SpoofedIndex[self._object][Index] = NewSpoof
     table.insert(self._spoofs, Index)
 
     function NewSpoof:GetSpoofed()
-        return NewSpoof.Value(self._object, Index)
+        return NewSpoof._Value(self._object, Index)
     end
 
+    local Object, Spoofs = self._object, self._spoofs
     function NewSpoof:Disconnect()
-        SpoofedIndex[self._object][Index] = nil
-        table.remove(self._spoofs, table.find(self._spoofs, Index))
+        (SpoofedIndex[Object] or {})[Index] = nil
+        table.remove(Spoofs, table.find(Spoofs, Index))
+        NewSpoof.Value = function() end
+        NewSpoof = nil
     end
 
     return NewSpoof
@@ -78,12 +81,12 @@ setreadonly(RawMetatable, false)
 RawMetatable.__index = newcclosure(function(Self, Index)
     local Return;
 
-    if game:IsAncestorOf(rawget(getfenv(2), "script")) then
+    if game:IsAncestorOf(rawget(getfenv(2), "script")) or true then
         pcall(function()
             local SpoofedObject = rawget(SpoofedIndex, Self) or rawget(SpoofedIndex, tostring(Self))
             local Spoof = rawget(SpoofedObject, Index)
             if Spoof then
-                Return = Spoof.Value(Self, Index)
+                Return = Spoof._Value(Self, Index)
             end
         end)
     end
@@ -92,5 +95,12 @@ RawMetatable.__index = newcclosure(function(Self, Index)
 end)
 
 setreadonly(RawMetatable, true)
+
+local Spoofer = SpoofPlus.new(workspace.ihavoc101.Humanoid)
+local Spoof = Spoofer:AddSpoof("WalkSpeed", 999)
+warn("Spoof: " .. tostring(Spoof:GetSpoofed()))
+
+Spoof:Disconnect()
+warn("Unspoof: " .. tostring(workspace.ihavoc101.Humanoid.WalkSpeed))
 
 return SpoofPlus
