@@ -81,7 +81,7 @@ setreadonly(RawMetatable, false)
 RawMetatable.__index = newcclosure(function(Self, Index)
     local Return;
 
-    if game:IsAncestorOf(rawget(getfenv(2), "script")) or true then
+    if game:IsAncestorOf(rawget(getfenv(2), "script")) then
         pcall(function()
             local SpoofedObject = rawget(SpoofedIndex, Self) or rawget(SpoofedIndex, tostring(Self))
             local Spoof = rawget(SpoofedObject, Index)
@@ -95,12 +95,5 @@ RawMetatable.__index = newcclosure(function(Self, Index)
 end)
 
 setreadonly(RawMetatable, true)
-
-local Spoofer = SpoofPlus.new(workspace.ihavoc101.Humanoid)
-local Spoof = Spoofer:AddSpoof("WalkSpeed", 999)
-warn("Spoof: " .. tostring(Spoof:GetSpoofed()))
-
-Spoof:Disconnect()
-warn("Unspoof: " .. tostring(workspace.ihavoc101.Humanoid.WalkSpeed))
 
 return SpoofPlus
