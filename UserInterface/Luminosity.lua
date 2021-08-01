@@ -918,7 +918,7 @@ function Luminosity.new(Name, Header, Icon)
                         Name = "Logo",
                         BackgroundTransparency = 1,
                         Size = UDim2.new(0, 30, 0, 30),
-                        Image = Icon and "rbxassetid://" .. tostring(Icon) or "rbxassetid://4370345701",
+                        Image = Icon and "rbxassetid://" .. tostring(Icon) or "rbxassetid://6897792342",
                         ScaleType = Enum.ScaleType.Fit
                     }),
                     Utility.new("TextLabel", {
@@ -1036,7 +1036,7 @@ function Luminosity.new(Name, Header, Icon)
     local Window = {
         Title = Name and tostring(Name) or "Luminosity";
         Header = Header and tostring(Header) or "v1.0.0";
-        Icon = tostring(Icon) or "4370345701";
+        Icon = tostring(Icon) or "6897792342";
         Toggled = true;
     }
     local WindowInfo = {
@@ -1524,7 +1524,7 @@ function Luminosity.new(Name, Header, Icon)
             if Index == "Title" then
                 TabButton.Title.Text = Value and tostring(Value) or "Tab"
             elseif Index == "Icon" then
-                TabButton.Icon.Image = Value and "rbxassetid://" .. tostring(Value) or "rbxassetid://4370345701"
+                TabButton.Icon.Image = Value and "rbxassetid://" .. tostring(Value) or "rbxassetid://6897792342"
             end
         end})
     end
@@ -1539,7 +1539,7 @@ function Luminosity.new(Name, Header, Icon)
         elseif Index == "Header" then
             Main.SideBar.Info.Header.Text = Value and tostring(Value) or "v1.0.0"
         elseif Index == "Icon" then
-            Main.SideBar.Info.Logo.Image = Value and "rbxassetid://" .. tostring(Value) or "rbxassetid://4370345701"
+            Main.SideBar.Info.Logo.Image = Value and "rbxassetid://" .. tostring(Value) or "rbxassetid://6897792342"
         end
         rawset(Self, Index, Value)
     end})
